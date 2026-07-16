@@ -1,39 +1,144 @@
-// Smooth scrolling
-document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        e.preventDefault();
+/* =====================================
+   DOGLYCOIN WEBSITE SCRIPT
+===================================== */
 
-        const target = document.querySelector(this.getAttribute('href'));
+// Smooth Navigation
+document.querySelectorAll("nav a").forEach(link => {
 
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-    });
+link.addEventListener("click",function(e){
+
+e.preventDefault();
+
+const target=document.querySelector(this.getAttribute("href"));
+
+if(target){
+
+target.scrollIntoView({
+
+behavior:"smooth"
+
 });
 
-// Header background on scroll
-const header = document.querySelector("header");
+}
 
-window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-        header.style.background = "rgba(8,15,35,0.95)";
-        header.style.boxShadow = "0 5px 20px rgba(0,0,0,.35)";
-    } else {
-        header.style.background = "rgba(10,15,35,.85)";
-        header.style.boxShadow = "none";
-    }
 });
 
-// Reveal animation
-const items = document.querySelectorAll(
-".about,.tokenomics,.roadmap,.gallery,.faq,.token-card,.road-card,.faq-item"
+});
+
+// Header Effect
+
+const header=document.querySelector("header");
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY>80){
+
+header.style.background="rgba(255,255,255,.96)";
+header.style.boxShadow="0 10px 30px rgba(0,0,0,.12)";
+
+}else{
+
+header.style.background="rgba(255,255,255,.90)";
+header.style.boxShadow="none";
+
+}
+
+});
+
+// =============================
+// Gallery Slider
+// =============================
+
+const images=[
+
+"images/1.jpg",
+"images/2.jpg",
+"images/3.jpg",
+"images/4.jpg",
+"images/5.jpg",
+"images/6.jpg",
+"images/7.jpg",
+"images/8.jpg",
+"images/9.jpg",
+"images/10.jpg",
+"images/11.jpg",
+"images/12.jpg",
+"images/13.jpg",
+"images/14.jpg",
+"images/15.jpg",
+"images/16.jpg",
+"images/17.jpg",
+"images/18.jpg",
+"images/19.jpg",
+"images/20.jpg"
+
+];
+
+let currentImage=0;
+
+const slider=document.getElementById("slider-image");
+
+function showImage(){
+
+slider.src=images[currentImage];
+
+}
+
+document.querySelector(".next").onclick=()=>{
+
+currentImage++;
+
+if(currentImage>=images.length){
+
+currentImage=0;
+
+}
+
+showImage();
+
+};
+
+document.querySelector(".prev").onclick=()=>{
+
+currentImage--;
+
+if(currentImage<0){
+
+currentImage=images.length-1;
+
+}
+
+showImage();
+
+};
+
+// Auto Slider
+
+setInterval(()=>{
+
+currentImage++;
+
+if(currentImage>=images.length){
+
+currentImage=0;
+
+}
+
+showImage();
+
+},4000);
+
+/* =====================================
+   REVEAL ANIMATION
+===================================== */
+
+const revealElements = document.querySelectorAll(
+".about,.tokenomics,.roadmap,.gallery,.partners,.faq,.token-card,.road-card,.partner-card,.faq-item"
 );
 
-const observer = new IntersectionObserver(entries => {
+const observer = new IntersectionObserver((entries)=>{
 
-entries.forEach(entry => {
+entries.forEach(entry=>{
 
 if(entry.isIntersecting){
 
@@ -44,33 +149,92 @@ entry.target.style.transform="translateY(0)";
 
 });
 
-},{threshold:0.15});
+},{
+threshold:0.15
+});
 
-items.forEach(item=>{
+revealElements.forEach(el=>{
 
-item.style.opacity="0";
-item.style.transform="translateY(40px)";
-item.style.transition="all .8s ease";
+el.style.opacity="0";
+el.style.transform="translateY(40px)";
+el.style.transition="all .8s ease";
 
-observer.observe(item);
+observer.observe(el);
 
 });
 
-// Gallery click effect
-document.querySelectorAll(".gallery img").forEach(img=>{
+/* =====================================
+   CARD HOVER EFFECT
+===================================== */
 
-img.addEventListener("click",()=>{
+document.querySelectorAll(
+".token-card,.road-card,.partner-card,.faq-item"
+).forEach(card=>{
 
-img.style.transform="scale(1.1)";
+card.addEventListener("mouseenter",()=>{
 
-setTimeout(()=>{
+card.style.transform="translateY(-12px) scale(1.03)";
 
-img.style.transform="scale(1)";
+});
 
-},300);
+card.addEventListener("mouseleave",()=>{
+
+card.style.transform="translateY(0) scale(1)";
 
 });
 
 });
+
+/* =====================================
+   HERO IMAGE EFFECT
+===================================== */
+
+const heroImg=document.querySelector(".hero-image img");
+
+if(heroImg){
+
+heroImg.addEventListener("mouseenter",()=>{
+
+heroImg.style.transform="scale(1.05) rotate(3deg)";
+
+});
+
+heroImg.addEventListener("mouseleave",()=>{
+
+heroImg.style.transform="scale(1) rotate(0deg)";
+
+});
+
+}
+
+/* =====================================
+   BUTTON EFFECT
+===================================== */
+
+document.querySelectorAll(".buttons a").forEach(btn=>{
+
+btn.addEventListener("mouseenter",()=>{
+
+btn.style.transform="translateY(-5px)";
+
+});
+
+btn.addEventListener("mouseleave",()=>{
+
+btn.style.transform="translateY(0)";
+
+});
+
+});
+
+/* =====================================
+   PAGE LOADED
+===================================== */
+
+window.addEventListener("load",()=>{
+
+document.body.style.opacity="1";
 
 console.log("🚀 DOGLYCOIN Website Loaded Successfully");
+
+});
